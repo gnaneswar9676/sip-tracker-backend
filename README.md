@@ -1,6 +1,6 @@
 # SIP Tracker & Portfolio Valuation System
 
-A fintech backend application built using Node.js, Express.js, and SQLite for managing SIPs (Systematic Investment Plans), mutual funds, portfolio valuation, and investor authentication.
+A fintech backend application built using Node.js, Express.js, and SQLite for managing SIPs (Systematic Investment Plans), portfolio valuation, mutual funds, and investment transaction tracking.
 
 ---
 
@@ -11,12 +11,14 @@ A fintech backend application built using Node.js, Express.js, and SQLite for ma
 - Mutual Fund Management
 - AMC Management
 - SIP Registration
-- SIP Processing
+- SIP Installment Processing
 - Investment Transaction Tracking
 - Portfolio Holdings Calculation
 - Net Worth Calculation
 - NAV History Tracking
-- Transaction Handling using BEGIN / COMMIT / ROLLBACK
+- SQLite Transaction Handling
+- Role-Based Access Control
+- Protected APIs
 
 ---
 
@@ -25,7 +27,7 @@ A fintech backend application built using Node.js, Express.js, and SQLite for ma
 - Node.js
 - Express.js
 - SQLite
-- JWT Authentication
+- JWT
 - bcrypt
 - REST APIs
 
@@ -33,10 +35,7 @@ A fintech backend application built using Node.js, Express.js, and SQLite for ma
 
 # Database Design
 
-<img width="1043" height="757" alt="image" src="https://github.com/user-attachments/assets/4e94b918-456c-447e-85ab-87309429c784" />
-
-Normalized relational schema (3NF) including:
-
+Normalized relational schema (3NF) with:
 
 - investors
 - investor_auth
@@ -55,7 +54,7 @@ Normalized relational schema (3NF) including:
 - Password Hashing using bcrypt
 - JWT Token Generation
 - Protected APIs using Middleware
-- Role-based Authorization
+- Role-Based Authorization
 
 ---
 
@@ -103,7 +102,7 @@ Normalized relational schema (3NF) including:
 
 # Transaction Handling
 
-Implemented database transaction handling using:
+Implemented transaction-safe operations using:
 
 ```sql
 BEGIN TRANSACTION
@@ -154,41 +153,130 @@ nodemon server.js
 
 ---
 
-# Postman API Testing Screenshots
+# Project Structure
 
-## Login API
-
-![Login API](./screenshots/login.png)
-
----
-
-## Create SIP API
-
-![Create SIP](./screenshots/create-sip.png)
-
----
-
-## Process SIP API
-
-![Process SIP](./screenshots/process-sip.png)
+```txt
+backend/
+│
+├── controllers/
+├── routes/
+├── middleware/
+├── utility/
+├── database/
+├── screenshots/
+├── server.js
+├── package.json
+└── README.md
+```
 
 ---
 
-## Holdings API
+# Postman API Testing
 
-![Holdings](./screenshots/holdings.png)
+## 1. Health Check API
 
----
-
-## Networth API
-
-![Networth](./screenshots/networth.png)
+![Health API](./screenshots/health-api.png)
 
 ---
 
+## 2. Register API
 
+![Register API](./screenshots/register-api.png)
 
+---
 
+## 3. Login API
+
+![Login API](./screenshots/login-api.png)
+
+---
+
+## 4. Get Funds API
+
+![Funds API](./screenshots/funds-api.png)
+
+---
+
+## 5. Create Fund API
+
+![Create Fund API](./screenshots/create-fund-api.png)
+
+---
+
+## 6. Update NAV API
+
+![Update NAV API](./screenshots/update-nav-api.png)
+
+---
+
+## 7. Create SIP API
+
+![Create SIP API](./screenshots/create-sip-api.png)
+
+---
+
+## 8. Get SIP API
+
+![Get SIP API](./screenshots/get-sip-api.png)
+
+---
+
+## 9. Process SIP API
+
+![Process SIP API](./screenshots/process-sip-api.png)
+
+---
+
+## 10. SIP Transactions API
+
+![SIP Transactions API](./screenshots/sip-transactions-api.png)
+
+---
+
+## 11. Holdings API
+
+![Holdings API](./screenshots/holdings-api.png)
+
+---
+
+## 12. Networth API
+
+![Networth API](./screenshots/networth-api.png)
+
+---
+
+## 13. Authorization API
+
+![Authorization API](./screenshots/authorization-api.png)
+
+---
+
+## 14. ER Diagram
+
+![ER Diagram](./screenshots/er-diagram.png)
+
+---
+
+# Security Features
+
+- JWT Authentication
+- Password Hashing using bcrypt
+- Protected Routes
+- Investor Ownership Validation
+- Role-Based Authorization
+
+---
+
+# Future Improvements
+
+- Swagger Documentation
+- Admin Role
+- Cron-based SIP Auto Processing
+- Docker Deployment
+- Unit Testing
+- Email Notifications
+
+---
 
 # Author
 
