@@ -267,17 +267,7 @@ backend/
 
 ---
 
-# Future Improvements
-
-- Swagger Documentation
-- Admin Role
-- Cron-based SIP Auto Processing
-- Docker Deployment
-- Unit Testing
-- Email Notifications
-
----
-
 # Author
 
-Gnaneswar K
+Gnaneswar Kollimarla
+Heysriram Perumalla
