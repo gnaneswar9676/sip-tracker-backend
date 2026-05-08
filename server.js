@@ -1,5 +1,7 @@
 require("dotenv").config();
-
+const {
+    connectRedis
+} = require("./services/redisService");
 const express = require("express");
 const cors = require("cors");
 
@@ -12,16 +14,24 @@ const {
     globalErrorHandler
 } = require("./middleware/errorMiddleware");
 
+const { connectDB } = require("./database/pgManager");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+
+// CONNECT DATABASE
+connectDB();
+
 
 // ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/investors", investorRoutes);
 app.use("/api/funds", fundRoutes);
 app.use("/api/sips", sipRoutes);
+
 
 // HEALTH CHECK
 app.get("/", (req, res) => {
@@ -31,9 +41,11 @@ app.get("/", (req, res) => {
     });
 });
 
+
 // GLOBAL ERROR HANDLER
 app.use(globalErrorHandler);
 
+connectRedis();
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
