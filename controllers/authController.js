@@ -1,7 +1,7 @@
 const db = require("../database/pgManager").client;
-
 const bcrypt = require("bcrypt");
 
+const { redisClient } = require("../services/redisService");
 const { generateToken } = require("../utility/authManager");
 
 const {
@@ -9,16 +9,12 @@ const {
     errorResponse
 } = require("../utility/responseHandler");
 
-
-
 // =======================================
 // REGISTER
 // =======================================
 
 exports.register = async (req, res) => {
-
     try {
-
         const {
             first_name,
             last_name,
@@ -28,259 +24,159 @@ exports.register = async (req, res) => {
             password
         } = req.body;
 
-
-        if (
-            !first_name ||
-            !last_name ||
-            !mobile ||
-            !email ||
-            !password
-        ) {
-
-            return errorResponse(
-                res,
-                400,
-                "All fields are required"
-            );
+        // VALIDATION
+        if (!first_name || !last_name || !mobile || !email || !password) {
+            return errorResponse(res, 400, "All fields are required");
         }
-
 
         // CHECK EMAIL
         const existingEmail = await db.query(
-            `SELECT * FROM investor_auth
-             WHERE email = $1`,
+            `SELECT * FROM investor_auth WHERE email = $1`,
             [email]
         );
 
-
         if (existingEmail.rows.length > 0) {
-
-            return errorResponse(
-                res,
-                400,
-                "Email already registered"
-            );
+            return errorResponse(res, 400, "Email already registered");
         }
-
 
         // CHECK MOBILE
         const existingMobile = await db.query(
-            `SELECT * FROM investors
-             WHERE mobile = $1`,
+            `SELECT * FROM investors WHERE mobile = $1`,
             [mobile]
         );
 
-
         if (existingMobile.rows.length > 0) {
-
-            return errorResponse(
-                res,
-                400,
-                "Mobile already registered"
-            );
+            return errorResponse(res, 400, "Mobile already registered");
         }
 
-
         // HASH PASSWORD
-        const hashedPassword = await bcrypt.hash(
-            password,
-            10
-        );
+        const hashedPassword = await bcrypt.hash(password, 10);
 
+        // BEGIN TRANSACTION
+        await db.query("BEGIN");
 
-        // INSERT INVESTOR
-        const investorResult = await db.query(
+        try {
+            // INSERT INVESTOR
+            const investorResult = await db.query(
+                `INSERT INTO investors(first_name, last_name, mobile, city)
+                 VALUES($1, $2, $3, $4)
+                 RETURNING investor_id`,
+                [first_name, last_name, mobile, city]
+            );
 
-            `INSERT INTO investors(
-                first_name,
-                last_name,
-                mobile,
-                city
-            )
-            VALUES($1,$2,$3,$4)
-            RETURNING investor_id`,
+            const investorId = investorResult.rows[0].investor_id;
 
-            [
-                first_name,
-                last_name,
-                mobile,
-                city
-            ]
-        );
+            // INSERT AUTH
+            await db.query(
+                `INSERT INTO investor_auth(investor_id, email, password)
+                 VALUES($1, $2, $3)`,
+                [investorId, email, hashedPassword]
+            );
 
+            // COMMIT
+            await db.query("COMMIT");
 
-        const investorId =
-            investorResult.rows[0].investor_id;
+            return successResponse(
+                res,
+                201,
+                "User registered successfully"
+            );
 
-
-        // INSERT AUTH
-        await db.query(
-
-            `INSERT INTO investor_auth(
-                investor_id,
-                email,
-                password
-            )
-            VALUES($1,$2,$3)`,
-
-            [
-                investorId,
-                email,
-                hashedPassword
-            ]
-        );
-
-
-        return successResponse(
-            res,
-            201,
-            "User registered successfully"
-        );
+        } catch (error) {
+            await db.query("ROLLBACK");
+            return errorResponse(res, 500, error.message);
+        }
 
     } catch (error) {
-
-        return errorResponse(
-            res,
-            500,
-            error.message
-        );
+        return errorResponse(res, 500, error.message);
     }
 };
-
-
 
 // =======================================
 // LOGIN
 // =======================================
 
 exports.login = async (req, res) => {
-
     try {
+        const { email, password } = req.body;
 
-        const {
-            email,
-            password
-        } = req.body;
-
-
+        // VALIDATION
         if (!email || !password) {
-
-            return errorResponse(
-                res,
-                400,
-                "Email and password required"
-            );
+            return errorResponse(res, 400, "Email and password required");
         }
 
+        // CHECK REDIS CACHE
+        const cachedUser = await redisClient.get(`user_${email}`);
+        let user;
 
-        // GET USER
-        const result = await db.query(
+        if (cachedUser) {
+            user = JSON.parse(cachedUser);
+            console.log("User fetched from Redis cache");
 
-            `SELECT
-                ia.*,
-                i.first_name,
-                i.last_name
-
-             FROM investor_auth ia
-
-             JOIN investors i
-             ON ia.investor_id = i.investor_id
-
-             WHERE ia.email = $1`,
-
-            [email]
-        );
-
-
-        const user = result.rows[0];
-
-
-        if (!user) {
-
-            return errorResponse(
-                res,
-                404,
-                "User not found"
+        } else {
+            // FETCH FROM POSTGRESQL
+            const result = await db.query(
+                `SELECT ia.*, i.first_name, i.last_name
+                 FROM investor_auth ia
+                 JOIN investors i
+                 ON ia.investor_id = i.investor_id
+                 WHERE ia.email = $1`,
+                [email]
             );
-        }
 
+            user = result.rows[0];
+
+            if (!user) {
+                return errorResponse(res, 404, "User not found");
+            }
+
+            // STORE IN REDIS
+            await redisClient.set(
+                `user_${email}`,
+                JSON.stringify(user),
+                { EX: 300 }
+            );
+
+            console.log("User stored in Redis");
+        }
 
         // CHECK PASSWORD
-        const isPasswordValid =
-            await bcrypt.compare(
-                password,
-                user.password
-            );
-
+        const isPasswordValid = await bcrypt.compare(
+            password,
+            user.password
+        );
 
         if (!isPasswordValid) {
-
-            return errorResponse(
-                res,
-                401,
-                "Invalid password"
-            );
+            return errorResponse(res, 401, "Invalid password");
         }
-
 
         // GENERATE TOKEN
         const token = generateToken({
-
             investor_id: user.investor_id,
-
             email: user.email,
-
             role: user.role
         });
 
-
         // UPDATE LAST LOGIN
         await db.query(
-
             `UPDATE investor_auth
-
              SET last_login = CURRENT_TIMESTAMP
-
              WHERE auth_id = $1`,
-
             [user.auth_id]
         );
 
-
-        return successResponse(
-            res,
-            200,
-            "Login successful",
-            {
-
-                token,
-
-                investor: {
-
-                    investor_id:
-                        user.investor_id,
-
-                    first_name:
-                        user.first_name,
-
-                    last_name:
-                        user.last_name,
-
-                    email:
-                        user.email,
-
-                    role:
-                        user.role
-                }
+        return successResponse(res, 200, "Login successful", {
+            token,
+            investor: {
+                investor_id: user.investor_id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                role: user.role
             }
-        );
+        });
 
     } catch (error) {
-
-        return errorResponse(
-            res,
-            500,
-            error.message
-        );
+        return errorResponse(res, 500, error.message);
     }
 };
