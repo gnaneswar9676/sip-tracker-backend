@@ -1,6 +1,6 @@
 # SIP Tracker & Portfolio Valuation System
 
-A fintech backend application built using Node.js, Express.js, and SQLite for managing SIPs (Systematic Investment Plans), portfolio valuation, mutual funds, and investment transaction tracking.
+A production-style fintech backend application built using Node.js, Express.js, PostgreSQL (Supabase), and Redis for managing SIPs (Systematic Investment Plans), portfolio valuation, mutual funds, and investment transaction tracking.
 
 ---
 
@@ -16,9 +16,11 @@ A fintech backend application built using Node.js, Express.js, and SQLite for ma
 - Portfolio Holdings Calculation
 - Net Worth Calculation
 - NAV History Tracking
-- SQLite Transaction Handling
+- Redis Caching
+- PostgreSQL Transaction Handling
 - Role-Based Access Control
 - Protected APIs
+- Docker-based Redis Integration
 
 ---
 
@@ -26,10 +28,26 @@ A fintech backend application built using Node.js, Express.js, and SQLite for ma
 
 - Node.js
 - Express.js
-- SQLite
-- JWT
+- PostgreSQL (Supabase)
+- Redis
+- Docker
+- JWT Authentication
 - bcrypt
 - REST APIs
+
+---
+
+# System Architecture
+
+```txt
+Client
+   ↓
+Express REST APIs
+   ↓
+Redis Cache Layer
+   ↓
+PostgreSQL (Supabase)
+```
 
 ---
 
@@ -55,6 +73,42 @@ Normalized relational schema (3NF) with:
 - JWT Token Generation
 - Protected APIs using Middleware
 - Role-Based Authorization
+
+---
+
+# Redis Integration
+
+Implemented Redis caching for improving API performance.
+
+## Cached APIs
+
+- GET /api/funds
+
+---
+
+## Redis Features Implemented
+
+- Redis Docker Setup
+- Redis Service Layer
+- API Response Caching
+- Cache Expiry (TTL)
+- Cache Invalidation on NAV Updates
+
+---
+
+## Cache Flow
+
+```txt
+First Request
+    ↓
+PostgreSQL Query
+    ↓
+Store Data in Redis
+
+Second Request
+    ↓
+Fetch Data from Redis Cache
+```
 
 ---
 
@@ -102,10 +156,10 @@ Normalized relational schema (3NF) with:
 
 # Transaction Handling
 
-Implemented transaction-safe operations using:
+Implemented database transaction handling using:
 
 ```sql
-BEGIN TRANSACTION
+BEGIN
 COMMIT
 ROLLBACK
 ```
@@ -140,12 +194,31 @@ npm install
 
 ```env
 PORT=3000
+
 JWT_SECRET=your_secret_key
+
+DB_USER=postgres
+
+DB_HOST=your_supabase_host
+
+DB_NAME=postgres
+
+DB_PASSWORD=your_password
+
+DB_PORT=5432
 ```
 
 ---
 
-## Start Server
+# Run Redis using Docker
+
+```bash
+docker run -d --name redis -p 6379:6379 redis
+```
+
+---
+
+# Start Server
 
 ```bash
 nodemon server.js
@@ -161,6 +234,8 @@ backend/
 ├── controllers/
 ├── routes/
 ├── middleware/
+├── services/
+│   └── redisService.js
 ├── utility/
 ├── database/
 ├── screenshots/
@@ -173,85 +248,79 @@ backend/
 
 # Postman API Testing
 
-## 1. Health Check API
-
-![Health API](./screenshots/health-api.png)
-
----
-
-## 2. Register API
+## 1. Register API
 
 ![Register API](./screenshots/register-api.png)
 
 ---
 
-## 3. Login API
+## 2. Login API
 
 ![Login API](./screenshots/login-api.png)
 
 ---
 
-## 4. Get Funds API
+## 3. Get Funds API
 
 ![Funds API](./screenshots/funds-api.png)
 
 ---
 
-## 5. Create Fund API
+## 4. Create Fund API
 
 ![Create Fund API](./screenshots/create-fund-api.png)
 
 ---
 
-## 6. Update NAV API
+## 5. Update NAV API
 
 ![Update NAV API](./screenshots/update-nav-api.png)
 
 ---
 
-## 7. Create SIP API
+## 6. Create SIP API
 
 ![Create SIP API](./screenshots/create-sip-api.png)
 
 ---
 
-## 8. Get SIP API
+## 7. Get SIP API
 
 ![Get SIP API](./screenshots/get-sip-api.png)
 
 ---
 
-## 9. Process SIP API
+## 8. Process SIP API
 
 ![Process SIP API](./screenshots/process-sip-api.png)
 
 ---
 
-## 10. SIP Transactions API
+## 9. SIP Transactions API
 
 ![SIP Transactions API](./screenshots/sip-transactions-api.png)
 
 ---
 
-## 11. Holdings API
+## 10. Holdings API
 
 ![Holdings API](./screenshots/holdings-api.png)
 
 ---
 
-## 12. Networth API
+## 11. Networth API
 
 ![Networth API](./screenshots/networth-api.png)
 
 ---
 
-## 13. Authorization API
+## 12. Authorization API
 
 ![Authorization API](./screenshots/authorization-api.png)
 
 ---
 
-## 14. ER Diagram
+## 13. ER Diagram
 
 ![ER Diagram](./screenshots/er-diagram.png)
 
@@ -267,9 +336,10 @@ backend/
 
 ---
 
+
 # Author
 
 Gnaneswar Kollimarla
-
-
+---
 Heysriram Perumalla
+---
