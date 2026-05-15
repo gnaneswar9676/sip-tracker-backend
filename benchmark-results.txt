@@ -1,0 +1,130 @@
+SIP Tracker Backend Benchmark Results
+
+
+
+====================================================
+Root API
+====================================================
+
+URL:
+http://localhost:5000/
+
+Requests/sec:
+4604.3
+
+Latency Avg:
+10.34 ms
+
+Throughput Avg:
+1486950.4
+
+2xx Responses:
+46041
+
+Non-2xx Responses:
+0
+
+Errors:
+0
+
+Timeouts:
+0
+
+====================================================
+
+
+
+====================================================
+Funds API
+====================================================
+
+URL:
+http://localhost:5000/api/funds
+
+Requests/sec:
+5326.19
+
+Latency Avg:
+8.89 ms
+
+Throughput Avg:
+1704122.19
+
+2xx Responses:
+0
+
+Non-2xx Responses:
+58581
+
+Errors:
+0
+
+Timeouts:
+0
+
+====================================================
+
+
+
+====================================================
+Investor API
+====================================================
+
+URL:
+http://localhost:5000/api/investors/1
+
+Requests/sec:
+5458.37
+
+Latency Avg:
+8.65 ms
+
+Throughput Avg:
+1746525.1
+
+2xx Responses:
+0
+
+Non-2xx Responses:
+60037
+
+Errors:
+0
+
+Timeouts:
+0
+
+====================================================
+
+
+
+====================================================
+SIP API
+====================================================
+
+URL:
+http://localhost:5000/api/sips
+
+Requests/sec:
+4826.82
+
+Latency Avg:
+9.85 ms
+
+Throughput Avg:
+1544238.55
+
+2xx Responses:
+0
+
+Non-2xx Responses:
+53083
+
+Errors:
+0
+
+Timeouts:
+0
+
+====================================================
+

@@ -1,6 +1,13 @@
 const db = require("../database/pgManager").client;
 const bcrypt = require("bcrypt");
+const crypto =
+  require("crypto");
 
+const {
+  sendResetEmail,
+} = require(
+  "../services/mailService"
+);
 const { redisClient } = require("../services/redisService");
 const { generateToken } = require("../utility/authManager");
 
@@ -178,5 +185,186 @@ exports.login = async (req, res) => {
 
     } catch (error) {
         return errorResponse(res, 500, error.message);
+    }
+};
+// =======================================
+// FORGOT PASSWORD
+// =======================================
+
+exports.forgotPassword = async (req, res) => {
+
+    try {
+
+        const { email } = req.body;
+
+        // CHECK USER
+        const result = await db.query(
+            `
+            SELECT *
+            FROM investor_auth
+            WHERE email = $1
+            `,
+            [email]
+        );
+
+        const user = result.rows[0];
+
+        if (!user) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message: "Email not found",
+
+            });
+        }
+
+        // GENERATE TOKEN
+        const resetToken =
+            crypto.randomBytes(32).toString("hex");
+
+        const expiry = new Date(
+            Date.now() + 1000 * 60 * 15
+        );
+
+        // STORE TOKEN
+        await db.query(
+            `
+            UPDATE investor_auth
+            SET
+                reset_token = $1,
+                reset_token_expiry = $2
+            WHERE email = $3
+            `,
+            [
+                resetToken,
+                expiry,
+                email
+            ]
+        );
+
+        // RESET LINK
+        const resetLink =
+            `http://localhost:3000/reset-password/${resetToken}`;
+
+        // SEND EMAIL
+        await sendResetEmail(
+            email,
+            resetLink
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            message: "Reset link sent to email",
+
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+
+            success: false,
+
+            message: "Internal server error",
+
+        });
+    }
+};
+
+
+// =======================================
+// RESET PASSWORD
+// =======================================
+
+exports.resetPassword = async (req, res) => {
+
+    try {
+
+        const { token } = req.params;
+
+        const { password } = req.body;
+
+        // CHECK TOKEN
+        const result = await db.query(
+            `
+            SELECT *
+            FROM investor_auth
+            WHERE reset_token = $1
+            `,
+            [token]
+        );
+
+        const user = result.rows[0];
+
+        if (!user) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message: "Invalid token",
+
+            });
+        }
+
+        // CHECK EXPIRY
+        if (
+            new Date(user.reset_token_expiry)
+            < new Date()
+        ) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message: "Token expired",
+
+            });
+        }
+
+        // HASH PASSWORD
+        const hashedPassword =
+            await bcrypt.hash(password, 10);
+
+        // UPDATE PASSWORD
+        await db.query(
+            `
+            UPDATE investor_auth
+            SET
+                password = $1,
+                reset_token = NULL,
+                reset_token_expiry = NULL
+            WHERE reset_token = $2
+            `,
+            [
+                hashedPassword,
+                token
+            ]
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            message: "Password reset successful",
+
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+
+            success: false,
+
+            message: "Internal server error",
+
+        });
     }
 };

@@ -13,17 +13,22 @@ const {
 
 exports.getInvestor = async (req, res) => {
     try {
-        const investorId = req.params.investorId;
+       const investorId =
+req.user?.investor_id
+|| req.params.investorId;
 
         // AUTHORIZATION
-        if (req.user.investor_id != investorId) {
-            return errorResponse(
-                res,
-                403,
-                "Unauthorized access"
-            );
-        }
-
+        // AUTHORIZATION
+if (
+    req.user &&
+    req.user.investor_id != investorId
+) {
+    return errorResponse(
+        res,
+        403,
+        "Unauthorized access"
+    );
+}
         // CHECK REDIS CACHE
         const cachedInvestor = await redisClient.get(
             `investor_${investorId}`

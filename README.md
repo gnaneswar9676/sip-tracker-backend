@@ -1,6 +1,6 @@
 # SIP Tracker & Portfolio Valuation System
 
-A production-style fintech backend application built using Node.js, Express.js, PostgreSQL (Supabase), and Redis for managing SIPs (Systematic Investment Plans), portfolio valuation, mutual funds, and investment transaction tracking.
+A production-style fintech backend application built using Node.js, Express.js, PostgreSQL (Supabase), Redis, Docker, and JWT Authentication for managing SIPs (Systematic Investment Plans), portfolio valuation, mutual funds, and investment transaction tracking.
 
 ---
 
@@ -21,6 +21,10 @@ A production-style fintech backend application built using Node.js, Express.js, 
 - Role-Based Access Control
 - Protected APIs
 - Docker-based Redis Integration
+- API Testing using Jest & Supertest
+- API Load Testing using Autocannon
+- Redis Cache Invalidation
+- Fintech Portfolio Workflow Logic
 
 ---
 
@@ -33,6 +37,9 @@ A production-style fintech backend application built using Node.js, Express.js, 
 - Docker
 - JWT Authentication
 - bcrypt
+- Jest
+- Supertest
+- Autocannon
 - REST APIs
 
 ---
@@ -83,6 +90,9 @@ Implemented Redis caching for improving API performance.
 ## Cached APIs
 
 - GET /api/funds
+- GET /api/investors/:investorId
+- GET /api/investors/:investorId/holdings
+- GET /api/investors/:investorId/networth
 
 ---
 
@@ -148,9 +158,12 @@ Fetch Data from Redis Cache
 | Method | Endpoint |
 |---|---|
 | POST | /api/sips |
-| GET | /api/sips/:sipId |
+| GET | /api/sips |
 | POST | /api/sips/:sipId/process |
 | GET | /api/sips/:sipId/transactions |
+| PATCH | /api/sips/:sipId/pause |
+| PATCH | /api/sips/:sipId/resume |
+| PATCH | /api/sips/:sipId/cancel |
 
 ---
 
@@ -169,6 +182,77 @@ Used in:
 - User Registration
 - SIP Processing
 - NAV Updates
+
+---
+
+# Automated Testing
+
+Implemented backend API testing using:
+
+- Jest
+- Supertest
+
+## Test Coverage
+
+### Auth APIs
+- Register API
+- Login API
+
+### Investor APIs
+- Get Investor Profile
+- Get Holdings
+- Get Networth
+
+### Fund APIs
+- Get Funds
+- Create Fund
+- Update NAV
+
+### SIP APIs
+- Create SIP
+- Get All SIPs
+- Process SIP
+- SIP Transactions
+- Pause SIP
+- Resume SIP
+- Cancel SIP
+
+### Additional Testing
+- Protected Route Testing
+- Middleware Testing
+- Redis Mocking
+- PostgreSQL Mocking
+- Transaction Workflow Testing
+- Authentication Testing
+
+---
+
+# Test Results
+
+```bash
+Test Suites: 5 passed, 5 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+```
+
+---
+
+# Performance Testing
+
+Implemented API load testing using Autocannon.
+
+## Benchmarked APIs
+
+- GET /api/funds
+- GET /api/investors/:investorId
+- GET /api/sips
+
+## Performance Features
+
+- Redis-powered low latency APIs
+- High throughput API handling
+- Concurrent request benchmarking
+- Benchmark result export
 
 ---
 
@@ -193,7 +277,7 @@ npm install
 ## Create .env File
 
 ```env
-PORT=3000
+PORT=5000
 
 JWT_SECRET=your_secret_key
 
@@ -221,7 +305,35 @@ docker run -d --name redis -p 6379:6379 redis
 # Start Server
 
 ```bash
+npm start
+```
+
+OR
+
+```bash
 nodemon server.js
+```
+
+---
+
+# Run Test Cases
+
+```bash
+npm test
+```
+
+---
+
+# Run API Benchmarks
+
+```bash
+node benchmark.js
+```
+
+Benchmark results will automatically be saved inside:
+
+```txt
+benchmark-results.txt
 ```
 
 ---
@@ -238,8 +350,17 @@ backend/
 │   └── redisService.js
 ├── utility/
 ├── database/
+├── tests/
+│   ├── app.test.js
+│   ├── auth.test.js
+│   ├── investor.test.js
+│   ├── funds.test.js
+│   └── sip.test.js
 ├── screenshots/
+├── benchmark.js
+├── benchmark-results.txt
 ├── server.js
+├── app.js
 ├── package.json
 └── README.md
 ```
@@ -336,10 +457,27 @@ backend/
 
 ---
 
+# Engineering Highlights
+
+- Production-style backend architecture
+- Fintech workflow implementation
+- Redis caching strategy
+- PostgreSQL transaction handling
+- API performance benchmarking
+- Automated backend testing
+- Scalable modular code structure
+- Middleware-based authorization system
+
+---
+
+
 
 # Author
 
 Gnaneswar Kollimarla
+
 ---
+
 Heysriram Perumalla
+
 ---

@@ -7,12 +7,15 @@ const {
     errorResponse
 } = require("../utility/responseHandler");
 
+
 // =======================================
 // CREATE SIP
 // =======================================
 
 exports.createSIP = async (req, res) => {
+
     try {
+
         const {
             fund_id,
             sip_amount,
@@ -23,6 +26,7 @@ exports.createSIP = async (req, res) => {
 
         // VALIDATION
         if (!fund_id || !sip_amount || !sip_date) {
+
             return errorResponse(
                 res,
                 400,
@@ -31,6 +35,7 @@ exports.createSIP = async (req, res) => {
         }
 
         if (sip_amount <= 0) {
+
             return errorResponse(
                 res,
                 400,
@@ -39,6 +44,7 @@ exports.createSIP = async (req, res) => {
         }
 
         if (sip_date < 1 || sip_date > 31) {
+
             return errorResponse(
                 res,
                 400,
@@ -48,12 +54,16 @@ exports.createSIP = async (req, res) => {
 
         // CHECK FUND
         const fundResult = await db.query(
-            `SELECT * FROM mutual_funds
-             WHERE fund_id = $1`,
+            `
+            SELECT *
+            FROM mutual_funds
+            WHERE fund_id = $1
+            `,
             [fund_id]
         );
 
         if (fundResult.rows.length === 0) {
+
             return errorResponse(
                 res,
                 404,
@@ -63,14 +73,16 @@ exports.createSIP = async (req, res) => {
 
         // CREATE SIP
         const result = await db.query(
-            `INSERT INTO sips(
+            `
+            INSERT INTO sips(
                 investor_id,
                 fund_id,
                 sip_amount,
                 sip_date
             )
             VALUES($1, $2, $3, $4)
-            RETURNING sip_id`,
+            RETURNING sip_id
+            `,
             [
                 investorId,
                 fund_id,
@@ -89,6 +101,7 @@ exports.createSIP = async (req, res) => {
         );
 
     } catch (error) {
+
         return errorResponse(
             res,
             500,
@@ -97,111 +110,91 @@ exports.createSIP = async (req, res) => {
     }
 };
 
+
 // =======================================
-// GET SIP
+// GET ALL SIPS
 // =======================================
 
-exports.getSIP = async (req, res) => {
+exports.getAllSIPs = async (req, res) => {
+
     try {
-        const sipId = req.params.sipId;
+
         const investorId = req.user.investor_id;
 
-        // CHECK REDIS CACHE
-        const cachedSIP = await redisClient.get(
-            `sip_${sipId}`
+        const result = await db.query(
+            `
+            SELECT
+                s.sip_id,
+                s.sip_amount,
+                s.sip_date,
+                mf.fund_name
+            FROM sips s
+
+            JOIN mutual_funds mf
+            ON s.fund_id = mf.fund_id
+
+            WHERE s.investor_id = $1
+
+            ORDER BY s.sip_id DESC
+            `,
+            [investorId]
         );
 
-        let sip;
+        return res.status(200).json({
 
-        // RETURN CACHE
-        if (cachedSIP) {
-            sip = JSON.parse(cachedSIP);
+            success: true,
 
-            console.log("SIP fetched from Redis cache");
+            message: "SIPs fetched successfully",
 
-        } else {
-            // FETCH FROM POSTGRESQL
-            const result = await db.query(
-                `SELECT
-                    s.*,
-                    mf.fund_name,
-                    mf.nav
-                 FROM sips s
-                 JOIN mutual_funds mf
-                 ON s.fund_id = mf.fund_id
-                 WHERE s.sip_id = $1`,
-                [sipId]
-            );
-
-            sip = result.rows[0];
-
-            if (!sip) {
-                return errorResponse(
-                    res,
-                    404,
-                    "SIP not found"
-                );
-            }
-
-            // STORE IN REDIS
-            await redisClient.set(
-                `sip_${sipId}`,
-                JSON.stringify(sip),
-                { EX: 300 }
-            );
-
-            console.log("SIP stored in Redis");
-        }
-
-        // AUTHORIZATION
-        if (sip.investor_id != investorId) {
-            return errorResponse(
-                res,
-                403,
-                "Unauthorized access"
-            );
-        }
-
-        return successResponse(
-            res,
-            200,
-            "SIP fetched successfully",
-            sip
-        );
+            data: result.rows,
+        });
 
     } catch (error) {
-        return errorResponse(
-            res,
-            500,
-            error.message
-        );
+
+        console.log(error);
+
+        return res.status(500).json({
+
+            success: false,
+
+            message: "Internal server error",
+        });
     }
 };
+
 
 // =======================================
 // PROCESS SIP
 // =======================================
 
 exports.processSIP = async (req, res) => {
+
     try {
+
         const sipId = req.params.sipId;
+
         const investorId = req.user.investor_id;
 
         // GET SIP DETAILS
         const result = await db.query(
-            `SELECT
+            `
+            SELECT
                 s.*,
                 mf.nav
-             FROM sips s
-             JOIN mutual_funds mf
-             ON s.fund_id = mf.fund_id
-             WHERE s.sip_id = $1`,
+            FROM sips s
+
+            JOIN mutual_funds mf
+            ON s.fund_id = mf.fund_id
+
+            WHERE s.sip_id = $1
+            `,
             [sipId]
         );
 
         const sip = result.rows[0];
 
         if (!sip) {
+
             return errorResponse(
                 res,
                 404,
@@ -211,6 +204,7 @@ exports.processSIP = async (req, res) => {
 
         // AUTHORIZATION
         if (sip.investor_id != investorId) {
+
             return errorResponse(
                 res,
                 403,
@@ -226,9 +220,11 @@ exports.processSIP = async (req, res) => {
         await db.query("BEGIN");
 
         try {
+
             // INSERT TRANSACTION
             const transactionResult = await db.query(
-                `INSERT INTO investment_transactions(
+                `
+                INSERT INTO investment_transactions(
                     sip_id,
                     investor_id,
                     fund_id,
@@ -237,7 +233,9 @@ exports.processSIP = async (req, res) => {
                     units_allocated
                 )
                 VALUES($1, $2, $3, $4, $5, $6)
-                RETURNING transaction_id`,
+
+                RETURNING transaction_id
+                `,
                 [
                     sip.sip_id,
                     sip.investor_id,
@@ -253,7 +251,9 @@ exports.processSIP = async (req, res) => {
 
             // CLEAR CACHE
             await redisClient.del(`holdings_${investorId}`);
+
             await redisClient.del(`networth_${investorId}`);
+
             await redisClient.del(`sip_${sipId}`);
 
             console.log(
@@ -274,6 +274,7 @@ exports.processSIP = async (req, res) => {
             );
 
         } catch (error) {
+
             await db.query("ROLLBACK");
 
             return errorResponse(
@@ -284,6 +285,7 @@ exports.processSIP = async (req, res) => {
         }
 
     } catch (error) {
+
         return errorResponse(
             res,
             500,
@@ -292,22 +294,28 @@ exports.processSIP = async (req, res) => {
     }
 };
 
+
 // =======================================
-// GET SIP TRANSACTIONS
+// GET TRANSACTIONS
 // =======================================
 
 exports.getTransactions = async (req, res) => {
+
     try {
+
         const sipId = req.params.sipId;
+
         const investorId = req.user.investor_id;
 
         // CHECK REDIS CACHE
-        const cachedTransactions = await redisClient.get(
-            `transactions_${sipId}`
-        );
+        const cachedTransactions =
+            await redisClient.get(
+                `transactions_${sipId}`
+            );
 
         // RETURN CACHE
         if (cachedTransactions) {
+
             console.log(
                 "Transactions fetched from Redis cache"
             );
@@ -322,15 +330,18 @@ exports.getTransactions = async (req, res) => {
 
         // CHECK SIP OWNERSHIP
         const sipResult = await db.query(
-            `SELECT investor_id
-             FROM sips
-             WHERE sip_id = $1`,
+            `
+            SELECT investor_id
+            FROM sips
+            WHERE sip_id = $1
+            `,
             [sipId]
         );
 
         const sip = sipResult.rows[0];
 
         if (!sip) {
+
             return errorResponse(
                 res,
                 404,
@@ -340,6 +351,7 @@ exports.getTransactions = async (req, res) => {
 
         // AUTHORIZATION
         if (sip.investor_id != investorId) {
+
             return errorResponse(
                 res,
                 403,
@@ -349,15 +361,19 @@ exports.getTransactions = async (req, res) => {
 
         // GET TRANSACTIONS
         const transactionResult = await db.query(
-            `SELECT
+            `
+            SELECT
                 transaction_id,
                 amount,
                 nav_at_purchase,
                 units_allocated,
                 transaction_date
-             FROM investment_transactions
-             WHERE sip_id = $1
-             ORDER BY transaction_date DESC`,
+            FROM investment_transactions
+
+            WHERE sip_id = $1
+
+            ORDER BY transaction_date DESC
+            `,
             [sipId]
         );
 
@@ -368,7 +384,9 @@ exports.getTransactions = async (req, res) => {
             { EX: 300 }
         );
 
-        console.log("Transactions stored in Redis");
+        console.log(
+            "Transactions stored in Redis"
+        );
 
         return successResponse(
             res,
@@ -378,10 +396,204 @@ exports.getTransactions = async (req, res) => {
         );
 
     } catch (error) {
+
         return errorResponse(
             res,
             500,
             error.message
         );
     }
+};
+
+// =======================================
+// GET ALL TRANSACTIONS
+// =======================================
+
+exports.getAllTransactions = async (req, res) => {
+
+    try {
+
+        const investorId =
+            req.user.investor_id;
+
+        const result = await db.query(
+            `
+            SELECT
+                it.transaction_id,
+                it.amount,
+                it.nav_at_purchase,
+                it.units_allocated,
+                it.transaction_date,
+                s.sip_id,
+                mf.fund_name
+
+            FROM investment_transactions it
+
+            JOIN sips s
+            ON it.sip_id = s.sip_id
+
+            JOIN mutual_funds mf
+            ON it.fund_id = mf.fund_id
+
+            WHERE s.investor_id = $1
+
+            ORDER BY it.transaction_id DESC
+            `,
+            [investorId]
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            message:
+                "Transactions fetched successfully",
+
+            data: result.rows,
+
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                "Internal server error",
+
+        });
+
+    }
+};
+
+exports.pauseSIP =
+async (req, res) => {
+
+  try {
+
+    const sipId =
+    req.params.sipId;
+
+
+    await db.query(
+
+      `UPDATE sips
+
+       SET status = 'PAUSED'
+
+       WHERE sip_id = $1`,
+
+      [sipId]
+    );
+
+
+    return successResponse(
+
+      res,
+
+      200,
+
+      "SIP paused successfully"
+    );
+
+  } catch (error) {
+
+    return errorResponse(
+
+      res,
+
+      500,
+
+      error.message
+    );
+  }
+};
+
+exports.cancelSIP =
+async (req, res) => {
+
+  try {
+
+    const sipId =
+    req.params.sipId;
+
+
+    await db.query(
+
+      `UPDATE sips
+
+       SET status = 'CANCELLED'
+
+       WHERE sip_id = $1`,
+
+      [sipId]
+    );
+
+
+    return successResponse(
+
+      res,
+
+      200,
+
+      "SIP cancelled successfully"
+    );
+
+  } catch (error) {
+
+    return errorResponse(
+
+      res,
+
+      500,
+
+      error.message
+    );
+  }
+};
+
+exports.resumeSIP =
+async (req, res) => {
+
+  try {
+
+    const sipId =
+    req.params.sipId;
+
+
+    await db.query(
+
+      `UPDATE sips
+
+       SET status = 'ACTIVE'
+
+       WHERE sip_id = $1`,
+
+      [sipId]
+    );
+
+
+    return successResponse(
+
+      res,
+
+      200,
+
+      "SIP resumed successfully"
+    );
+
+  } catch (error) {
+
+    return errorResponse(
+
+      res,
+
+      500,
+
+      error.message
+    );
+  }
 };
