@@ -1,142 +1,452 @@
 [
   {
-    "traceId": "612d6905beaaa230e8b5a46e0c7170b4",
-    "spanId": "2406a235c7832b6a",
-    "name": "dns.lookup",
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "a6b5587bff5491c9",
+    "name": "middleware - corsMiddleware",
     "startTime": [
-      1779098498,
-      28000000
+      1779099183,
+      83000000
     ],
     "endTime": [
-      1779098498,
-      29657300
+      1779099183,
+      84605200
     ],
     "attributes": {
-      "peer.ipv4": "0.0.0.0"
+      "express.name": "corsMiddleware",
+      "express.type": "middleware"
     }
   }
 ]
 [
   {
-    "traceId": "63077931c9223f2fc85260c4fbed99f5",
-    "spanId": "680152b7569e378a",
-    "name": "tcp.connect",
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "2627965fbd540ffc",
+    "name": "middleware - patched",
     "startTime": [
-      1779098498,
-      26000000
+      1779099183,
+      79000000
     ],
     "endTime": [
-      1779098498,
-      55301000
+      1779099183,
+      97126000
     ],
     "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "b4994e28c6bcecfb",
+    "name": "middleware - jsonParser",
+    "startTime": [
+      1779099183,
+      115000000
+    ],
+    "endTime": [
+      1779099183,
+      156457000
+    ],
+    "attributes": {
+      "express.name": "jsonParser",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "af096fed0ff132bf",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099183,
+      114000000
+    ],
+    "endTime": [
+      1779099183,
+      171569300
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "954d037025088343",
+    "name": "middleware - loggerMiddleware",
+    "startTime": [
+      1779099183,
+      193000000
+    ],
+    "endTime": [
+      1779099183,
+      193657700
+    ],
+    "attributes": {
+      "express.name": "loggerMiddleware",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "3cfa749d11a69bd7",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099183,
+      192000000
+    ],
+    "endTime": [
+      1779099183,
+      214386900
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "4552a4ffdcb01f60",
+    "name": "router - /register",
+    "startTime": [
+      1779099183,
+      240000000
+    ],
+    "endTime": [
+      1779099183,
+      240054900
+    ],
+    "attributes": {
+      "http.route": "/api/auth",
+      "express.name": "/register",
+      "express.type": "router"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "519cea067d3f83c1",
+    "name": "user-register",
+    "startTime": [
+      1779099183,
+      281000000
+    ],
+    "endTime": [
+      1779099183,
+      311458600
+    ],
+    "attributes": {
+      "user.email": "rohit@gmail.com"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "5f123c50bb9ca859",
+    "name": "POST /api/auth/register",
+    "startTime": [
+      1779099183,
+      76000000
+    ],
+    "endTime": [
+      1779099183,
+      958231800
+    ],
+    "attributes": {
+      "http.url": "http://localhost:5000/api/auth/register",
+      "http.host": "localhost:5000",
+      "net.host.name": "localhost",
+      "http.method": "POST",
+      "http.scheme": "http",
+      "http.target": "/api/auth/register",
+      "http.user_agent": "PostmanRuntime/7.54.0",
+      "http.request_content_length_uncompressed": 90,
+      "http.flavor": "1.1",
       "net.transport": "ip_tcp",
-      "net.peer.name": "127.0.0.1",
-      "net.peer.port": 6379,
-      "net.peer.ip": "127.0.0.1",
       "net.host.ip": "127.0.0.1",
-      "net.host.port": 54039
+      "net.host.port": 5000,
+      "net.peer.ip": "127.0.0.1",
+      "net.peer.port": 58783,
+      "http.status_code": 400,
+      "http.status_text": "BAD REQUEST",
+      "http.route": "/api/auth/register"
     }
   }
 ]
 [
   {
-    "traceId": "63077931c9223f2fc85260c4fbed99f5",
-    "spanId": "c65156053df80854",
-    "name": "redis-connect",
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "9ee8b4e9cc5da3d2",
+    "name": "request handler - /api/auth/register",
     "startTime": [
-      1779098498,
-      26000000
+      1779099183,
+      280000000
     ],
     "endTime": [
-      1779098498,
-      61445000
+      1779099184,
+      10373500
+    ],
+    "attributes": {
+      "router.name": "<anonymous>",
+      "router.version": "2.2.0",
+      "router.type": "request_handler",
+      "http.route": "/api/auth/register"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "c776423abbb3806a",
+    "name": "request handler - /api/auth/register",
+    "startTime": [
+      1779099183,
+      274000000
+    ],
+    "endTime": [
+      1779099184,
+      62183600
+    ],
+    "attributes": {
+      "http.route": "/api/auth/register",
+      "express.name": "/api/auth/register",
+      "express.type": "request_handler"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "6fd73becb5a8cc0d",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099183,
+      274000000
+    ],
+    "endTime": [
+      1779099184,
+      145862400
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/api/auth/register"
+    }
+  }
+]
+[
+  {
+    "traceId": "fa2afc3db37251e56cb82a4b6549c375",
+    "spanId": "13586d4629c4de3f",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099183,
+      238000000
+    ],
+    "endTime": [
+      1779099184,
+      463457900
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/api/auth"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "5939aeb3fb65e120",
+    "name": "middleware - corsMiddleware",
+    "startTime": [
+      1779099242,
+      337000000
+    ],
+    "endTime": [
+      1779099242,
+      337293400
+    ],
+    "attributes": {
+      "express.name": "corsMiddleware",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "328575e1322ae580",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099242,
+      337000000
+    ],
+    "endTime": [
+      1779099242,
+      370928200
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "721d921bf4e0c9d1",
+    "name": "middleware - jsonParser",
+    "startTime": [
+      1779099242,
+      401000000
+    ],
+    "endTime": [
+      1779099242,
+      402937200
+    ],
+    "attributes": {
+      "express.name": "jsonParser",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "11f223676e695309",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099242,
+      401000000
+    ],
+    "endTime": [
+      1779099242,
+      434105900
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "e56e0e7aa8875cb7",
+    "name": "middleware - loggerMiddleware",
+    "startTime": [
+      1779099242,
+      464000000
+    ],
+    "endTime": [
+      1779099242,
+      464230700
+    ],
+    "attributes": {
+      "express.name": "loggerMiddleware",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "ce4bf891165b3c59",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099242,
+      463000000
+    ],
+    "endTime": [
+      1779099242,
+      490882500
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "483df854c163b980",
+    "name": "router - /register",
+    "startTime": [
+      1779099242,
+      532000000
+    ],
+    "endTime": [
+      1779099242,
+      532192500
+    ],
+    "attributes": {
+      "http.route": "/api/auth",
+      "express.name": "/register",
+      "express.type": "router"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "cbc97011c83c5f6a",
+    "name": "redis-GET",
+    "startTime": [
+      1779099242,
+      589000000
+    ],
+    "endTime": [
+      1779099242,
+      629403800
     ],
     "attributes": {
       "db.system": "redis",
       "net.peer.name": "127.0.0.1",
       "net.peer.port": 6379,
-      "db.connection_string": "redis://127.0.0.1:6379"
+      "db.connection_string": "redis://127.0.0.1:6379",
+      "db.statement": "GET user_rohit@gmail.com"
     }
   }
 ]
 [
   {
-    "traceId": "10647b6cb4bdca377f5235b703d69390",
-    "spanId": "153398cfd18cc1a0",
-    "name": "dns.lookup",
-    "startTime": [
-      1779098498,
-      23000000
-    ],
-    "endTime": [
-      1779098498,
-      64698300
-    ],
-    "attributes": {
-      "peer.ipv4": "57.182.231.186",
-      "peer[1].ipv4": "13.114.6.6"
-    }
-  }
-]
-[
-  {
-    "traceId": "10647b6cb4bdca377f5235b703d69390",
-    "spanId": "66038c35149794e2",
-    "name": "tcp.connect",
-    "startTime": [
-      1779098498,
-      20000000
-    ],
-    "endTime": [
-      1779098498,
-      189788000
-    ],
-    "attributes": {
-      "net.transport": "ip_tcp",
-      "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
-      "net.peer.port": 6543,
-      "net.peer.ip": "57.182.231.186",
-      "net.host.ip": "10.142.3.250",
-      "net.host.port": 54040
-    }
-  }
-]
-[
-  {
-    "traceId": "10647b6cb4bdca377f5235b703d69390",
-    "spanId": "193267ecbf67e521",
-    "name": "pg.connect",
-    "startTime": [
-      1779098498,
-      19000000
-    ],
-    "endTime": [
-      1779098498,
-      861894900
-    ],
-    "attributes": {
-      "db.system": "postgresql",
-      "db.name": "postgres",
-      "db.connection_string": "postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres",
-      "db.user": "postgres.iaeuavzngbussduupiot",
-      "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
-      "net.peer.port": 6543
-    }
-  }
-]
-[
-  {
-    "traceId": "ac36e17056b6ef2c8c5752ed0b1a89a3",
-    "spanId": "78a2bb386cbdd830",
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "9e2e533b1b7f0c9a",
     "name": "pg.query:SELECT postgres",
     "startTime": [
-      1779098498,
-      878000000
+      1779099242,
+      709000000
     ],
     "endTime": [
-      1779098499,
-      5906700
+      1779099242,
+      950806100
     ],
     "attributes": {
       "db.system": "postgresql",
@@ -145,7 +455,830 @@
       "db.user": "postgres.iaeuavzngbussduupiot",
       "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
       "net.peer.port": 6543,
-      "db.statement": "SELECT NOW()"
+      "db.statement": "\n                    SELECT ia.*, i.first_name, i.last_name\n                    FROM investor_auth ia\n                    JOIN investors i\n                    ON ia.investor_id = i.investor_id\n                    WHERE ia.email = $1\n                    "
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "1a40293e593ab0b0",
+    "name": "redis-SET",
+    "startTime": [
+      1779099243,
+      87000000
+    ],
+    "endTime": [
+      1779099243,
+      95994400
+    ],
+    "attributes": {
+      "db.system": "redis",
+      "net.peer.name": "127.0.0.1",
+      "net.peer.port": 6379,
+      "db.connection_string": "redis://127.0.0.1:6379",
+      "db.statement": "SET user_rohit@gmail.com [3 other arguments]"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "23ef46c14c790c6d",
+    "name": "pg.query:UPDATE postgres",
+    "startTime": [
+      1779099243,
+      785000000
+    ],
+    "endTime": [
+      1779099243,
+      938454300
+    ],
+    "attributes": {
+      "db.system": "postgresql",
+      "db.name": "postgres",
+      "db.connection_string": "postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres",
+      "db.user": "postgres.iaeuavzngbussduupiot",
+      "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
+      "net.peer.port": 6543,
+      "db.statement": "\n            UPDATE investor_auth\n            SET last_login = CURRENT_TIMESTAMP\n            WHERE auth_id = $1\n            "
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "75f45accb6cf1216",
+    "name": "user-login",
+    "startTime": [
+      1779099242,
+      581000000
+    ],
+    "endTime": [
+      1779099243,
+      994101900
+    ],
+    "attributes": {
+      "user.email": "rohit@gmail.com"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "c6e33f373c50ffb8",
+    "name": "POST /api/auth/login",
+    "startTime": [
+      1779099242,
+      335000000
+    ],
+    "endTime": [
+      1779099244,
+      299802100
+    ],
+    "attributes": {
+      "http.url": "http://localhost:5000/api/auth/login",
+      "http.host": "localhost:5000",
+      "net.host.name": "localhost",
+      "http.method": "POST",
+      "http.scheme": "http",
+      "http.target": "/api/auth/login",
+      "http.user_agent": "PostmanRuntime/7.54.0",
+      "http.request_content_length_uncompressed": 90,
+      "http.flavor": "1.1",
+      "net.transport": "ip_tcp",
+      "net.host.ip": "127.0.0.1",
+      "net.host.port": 5000,
+      "net.peer.ip": "127.0.0.1",
+      "net.peer.port": 61962,
+      "http.status_code": 200,
+      "http.status_text": "OK",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "dbb76494c8638f0b",
+    "name": "request handler - /api/auth/login",
+    "startTime": [
+      1779099242,
+      580000000
+    ],
+    "endTime": [
+      1779099244,
+      390397800
+    ],
+    "attributes": {
+      "router.name": "<anonymous>",
+      "router.version": "2.2.0",
+      "router.type": "request_handler",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "07aab982963923f3",
+    "name": "request handler - /api/auth/login",
+    "startTime": [
+      1779099242,
+      580000000
+    ],
+    "endTime": [
+      1779099244,
+      501020800
+    ],
+    "attributes": {
+      "http.route": "/api/auth/login",
+      "express.name": "/api/auth/login",
+      "express.type": "request_handler"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "aeb6024f6822bc0f",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099242,
+      579000000
+    ],
+    "endTime": [
+      1779099244,
+      637245700
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "0fda4fea8c46d57f02b51102c0db569c",
+    "spanId": "2b536acd4964f595",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099242,
+      528000000
+    ],
+    "endTime": [
+      1779099244,
+      725032500
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/api/auth"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "84cda69f319773b3",
+    "name": "middleware - corsMiddleware",
+    "startTime": [
+      1779099259,
+      116000000
+    ],
+    "endTime": [
+      1779099259,
+      116186100
+    ],
+    "attributes": {
+      "express.name": "corsMiddleware",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "a7c4e2246c89e858",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099259,
+      116000000
+    ],
+    "endTime": [
+      1779099259,
+      292791800
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "f9df79e8b052cd51",
+    "name": "middleware - jsonParser",
+    "startTime": [
+      1779099259,
+      432000000
+    ],
+    "endTime": [
+      1779099259,
+      434068300
+    ],
+    "attributes": {
+      "express.name": "jsonParser",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "ec8fc2b3e15f4e78",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099259,
+      432000000
+    ],
+    "endTime": [
+      1779099259,
+      581930900
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "724db24d43876c8f",
+    "name": "middleware - loggerMiddleware",
+    "startTime": [
+      1779099259,
+      637000000
+    ],
+    "endTime": [
+      1779099259,
+      637124200
+    ],
+    "attributes": {
+      "express.name": "loggerMiddleware",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "7fcd586cda575c2b",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099259,
+      637000000
+    ],
+    "endTime": [
+      1779099259,
+      704291500
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "0023fe8e9598aeb2",
+    "name": "router - /register",
+    "startTime": [
+      1779099259,
+      768000000
+    ],
+    "endTime": [
+      1779099259,
+      768026700
+    ],
+    "attributes": {
+      "http.route": "/api/auth",
+      "express.name": "/register",
+      "express.type": "router"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "91e014504fae1574",
+    "name": "redis-GET",
+    "startTime": [
+      1779099259,
+      821000000
+    ],
+    "endTime": [
+      1779099259,
+      826543000
+    ],
+    "attributes": {
+      "db.system": "redis",
+      "net.peer.name": "127.0.0.1",
+      "net.peer.port": 6379,
+      "db.connection_string": "redis://127.0.0.1:6379",
+      "db.statement": "GET user_rohit@gmail.com"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "bf4dc2c2a96966b3",
+    "name": "pg.query:UPDATE postgres",
+    "startTime": [
+      1779099260,
+      138000000
+    ],
+    "endTime": [
+      1779099260,
+      267057000
+    ],
+    "attributes": {
+      "db.system": "postgresql",
+      "db.name": "postgres",
+      "db.connection_string": "postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres",
+      "db.user": "postgres.iaeuavzngbussduupiot",
+      "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
+      "net.peer.port": 6543,
+      "db.statement": "\n            UPDATE investor_auth\n            SET last_login = CURRENT_TIMESTAMP\n            WHERE auth_id = $1\n            "
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "dd93592564221c06",
+    "name": "user-login",
+    "startTime": [
+      1779099259,
+      820000000
+    ],
+    "endTime": [
+      1779099260,
+      327177600
+    ],
+    "attributes": {
+      "user.email": "rohit@gmail.com"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "54007877c153f9b2",
+    "name": "POST /api/auth/login",
+    "startTime": [
+      1779099259,
+      115000000
+    ],
+    "endTime": [
+      1779099260,
+      387222200
+    ],
+    "attributes": {
+      "http.url": "http://localhost:5000/api/auth/login",
+      "http.host": "localhost:5000",
+      "net.host.name": "localhost",
+      "http.method": "POST",
+      "http.scheme": "http",
+      "http.target": "/api/auth/login",
+      "http.user_agent": "PostmanRuntime/7.54.0",
+      "http.request_content_length_uncompressed": 90,
+      "http.flavor": "1.1",
+      "net.transport": "ip_tcp",
+      "net.host.ip": "127.0.0.1",
+      "net.host.port": 5000,
+      "net.peer.ip": "127.0.0.1",
+      "net.peer.port": 62033,
+      "http.status_code": 200,
+      "http.status_text": "OK",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "f592fe94bad97aa2",
+    "name": "request handler - /api/auth/login",
+    "startTime": [
+      1779099259,
+      820000000
+    ],
+    "endTime": [
+      1779099260,
+      453253600
+    ],
+    "attributes": {
+      "router.name": "<anonymous>",
+      "router.version": "2.2.0",
+      "router.type": "request_handler",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "a1fa2a281e78a93f",
+    "name": "request handler - /api/auth/login",
+    "startTime": [
+      1779099259,
+      820000000
+    ],
+    "endTime": [
+      1779099260,
+      526777300
+    ],
+    "attributes": {
+      "http.route": "/api/auth/login",
+      "express.name": "/api/auth/login",
+      "express.type": "request_handler"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "9585b000204efe40",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099259,
+      820000000
+    ],
+    "endTime": [
+      1779099260,
+      595890600
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "7868a7da45c1c1f95283d6dee7472fe0",
+    "spanId": "8babe574ccac2c09",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099259,
+      767000000
+    ],
+    "endTime": [
+      1779099260,
+      685137600
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/api/auth"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "74784818f8fb9e55",
+    "name": "middleware - corsMiddleware",
+    "startTime": [
+      1779099286,
+      242000000
+    ],
+    "endTime": [
+      1779099286,
+      242264900
+    ],
+    "attributes": {
+      "express.name": "corsMiddleware",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "de27db53a60ef914",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099286,
+      242000000
+    ],
+    "endTime": [
+      1779099286,
+      460720700
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "a375b34ac10b48a7",
+    "name": "middleware - jsonParser",
+    "startTime": [
+      1779099286,
+      648000000
+    ],
+    "endTime": [
+      1779099286,
+      652272300
+    ],
+    "attributes": {
+      "express.name": "jsonParser",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "37cbff7631ce3dfd",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099286,
+      648000000
+    ],
+    "endTime": [
+      1779099286,
+      804649400
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "d0f4de8a8bb3f9ac",
+    "name": "middleware - loggerMiddleware",
+    "startTime": [
+      1779099286,
+      909000000
+    ],
+    "endTime": [
+      1779099286,
+      909171700
+    ],
+    "attributes": {
+      "express.name": "loggerMiddleware",
+      "express.type": "middleware"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "18bee6f58d3f9ea9",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099286,
+      908000000
+    ],
+    "endTime": [
+      1779099287,
+      17861600
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "816a66b31ecc931d",
+    "name": "router - /register",
+    "startTime": [
+      1779099287,
+      138000000
+    ],
+    "endTime": [
+      1779099287,
+      138502600
+    ],
+    "attributes": {
+      "http.route": "/api/auth",
+      "express.name": "/register",
+      "express.type": "router"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "1fe6587662558ee0",
+    "name": "redis-GET",
+    "startTime": [
+      1779099287,
+      227000000
+    ],
+    "endTime": [
+      1779099287,
+      233822100
+    ],
+    "attributes": {
+      "db.system": "redis",
+      "net.peer.name": "127.0.0.1",
+      "net.peer.port": 6379,
+      "db.connection_string": "redis://127.0.0.1:6379",
+      "db.statement": "GET user_rohit@gmail.com"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "898375e8acc0368e",
+    "name": "pg.query:UPDATE postgres",
+    "startTime": [
+      1779099287,
+      555000000
+    ],
+    "endTime": [
+      1779099287,
+      684668000
+    ],
+    "attributes": {
+      "db.system": "postgresql",
+      "db.name": "postgres",
+      "db.connection_string": "postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres",
+      "db.user": "postgres.iaeuavzngbussduupiot",
+      "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
+      "net.peer.port": 6543,
+      "db.statement": "\n            UPDATE investor_auth\n            SET last_login = CURRENT_TIMESTAMP\n            WHERE auth_id = $1\n            "
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "296eac060dbb24a7",
+    "name": "user-login",
+    "startTime": [
+      1779099287,
+      226000000
+    ],
+    "endTime": [
+      1779099287,
+      753202800
+    ],
+    "attributes": {
+      "user.email": "rohit@gmail.com"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "75b458ad3adb226e",
+    "name": "POST /api/auth/login",
+    "startTime": [
+      1779099286,
+      241000000
+    ],
+    "endTime": [
+      1779099287,
+      833014200
+    ],
+    "attributes": {
+      "http.url": "http://localhost:5000/api/auth/login",
+      "http.host": "localhost:5000",
+      "net.host.name": "localhost",
+      "http.method": "POST",
+      "http.scheme": "http",
+      "http.target": "/api/auth/login",
+      "http.user_agent": "PostmanRuntime/7.54.0",
+      "http.request_content_length_uncompressed": 90,
+      "http.flavor": "1.1",
+      "net.transport": "ip_tcp",
+      "net.host.ip": "127.0.0.1",
+      "net.host.port": 5000,
+      "net.peer.ip": "127.0.0.1",
+      "net.peer.port": 62181,
+      "http.status_code": 200,
+      "http.status_text": "OK",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "5d6a4a9877212b17",
+    "name": "request handler - /api/auth/login",
+    "startTime": [
+      1779099287,
+      226000000
+    ],
+    "endTime": [
+      1779099287,
+      929033600
+    ],
+    "attributes": {
+      "router.name": "<anonymous>",
+      "router.version": "2.2.0",
+      "router.type": "request_handler",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "b0d50dc2a1d85153",
+    "name": "request handler - /api/auth/login",
+    "startTime": [
+      1779099287,
+      226000000
+    ],
+    "endTime": [
+      1779099288,
+      29003900
+    ],
+    "attributes": {
+      "http.route": "/api/auth/login",
+      "express.name": "/api/auth/login",
+      "express.type": "request_handler"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "e94766edb897e09e",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099287,
+      225000000
+    ],
+    "endTime": [
+      1779099288,
+      126521800
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/api/auth/login"
+    }
+  }
+]
+[
+  {
+    "traceId": "98e78daf9979627685878308f27727dd",
+    "spanId": "c9cc2725111c20a6",
+    "name": "middleware - patched",
+    "startTime": [
+      1779099287,
+      138000000
+    ],
+    "endTime": [
+      1779099288,
+      191722400
+    ],
+    "attributes": {
+      "router.name": "patched",
+      "router.version": "2.2.0",
+      "router.type": "middleware",
+      "http.route": "/api/auth"
     }
   }
 ]
