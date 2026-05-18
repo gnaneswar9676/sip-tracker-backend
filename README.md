@@ -469,7 +469,42 @@ backend/
 - Middleware-based authorization system
 
 ---
+# OpenTelemetry Observability
 
+Integrated OpenTelemetry for production-grade observability and distributed tracing.
+
+## Features
+
+- Automatic Express.js request tracing
+- HTTP request monitoring
+- PostgreSQL query tracing
+- Redis operation tracing
+- API latency monitoring
+- Error tracking
+- Distributed tracing support
+- Performance bottleneck detection
+
+---
+
+## OpenTelemetry Stack
+
+- @opentelemetry/api
+- @opentelemetry/sdk-node
+- @opentelemetry/auto-instrumentations-node
+- OTLP HTTP Trace Exporter
+
+---
+
+## Installation
+
+```bash
+- npm install @opentelemetry/sdk-node \
+- @opentelemetry/api \
+- @opentelemetry/auto-instrumentations-node \
+- @opentelemetry/exporter-trace-otlp-http
+
+
+---
 
 
 # Author
