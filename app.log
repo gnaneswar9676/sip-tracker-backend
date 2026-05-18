@@ -1,0 +1,3 @@
+{"level":"info","message":{"device":"desktop","duration":"9ms","ip":"127.0.0.1","method":"POST","status":404,"url":"/api/auth/signup"},"timestamp":"2026-05-18T09:17:12.056Z"}
+{"level":"info","message":{"device":"desktop","duration":"604ms","ip":"127.0.0.1","method":"POST","status":200,"url":"/api/auth/login"},"timestamp":"2026-05-18T09:17:19.708Z"}
+{"level":"info","message":{"device":"desktop","duration":"552ms","ip":"127.0.0.1","method":"POST","status":200,"url":"/api/auth/login"},"span_id":"040adb7c0c9931cc","timestamp":"2026-05-18T09:43:02.963Z","trace_flags":"01","trace_id":"7c55e2e92afb56b4425fc429cc40cf49"}
