@@ -1,0 +1,151 @@
+[
+  {
+    "traceId": "612d6905beaaa230e8b5a46e0c7170b4",
+    "spanId": "2406a235c7832b6a",
+    "name": "dns.lookup",
+    "startTime": [
+      1779098498,
+      28000000
+    ],
+    "endTime": [
+      1779098498,
+      29657300
+    ],
+    "attributes": {
+      "peer.ipv4": "0.0.0.0"
+    }
+  }
+]
+[
+  {
+    "traceId": "63077931c9223f2fc85260c4fbed99f5",
+    "spanId": "680152b7569e378a",
+    "name": "tcp.connect",
+    "startTime": [
+      1779098498,
+      26000000
+    ],
+    "endTime": [
+      1779098498,
+      55301000
+    ],
+    "attributes": {
+      "net.transport": "ip_tcp",
+      "net.peer.name": "127.0.0.1",
+      "net.peer.port": 6379,
+      "net.peer.ip": "127.0.0.1",
+      "net.host.ip": "127.0.0.1",
+      "net.host.port": 54039
+    }
+  }
+]
+[
+  {
+    "traceId": "63077931c9223f2fc85260c4fbed99f5",
+    "spanId": "c65156053df80854",
+    "name": "redis-connect",
+    "startTime": [
+      1779098498,
+      26000000
+    ],
+    "endTime": [
+      1779098498,
+      61445000
+    ],
+    "attributes": {
+      "db.system": "redis",
+      "net.peer.name": "127.0.0.1",
+      "net.peer.port": 6379,
+      "db.connection_string": "redis://127.0.0.1:6379"
+    }
+  }
+]
+[
+  {
+    "traceId": "10647b6cb4bdca377f5235b703d69390",
+    "spanId": "153398cfd18cc1a0",
+    "name": "dns.lookup",
+    "startTime": [
+      1779098498,
+      23000000
+    ],
+    "endTime": [
+      1779098498,
+      64698300
+    ],
+    "attributes": {
+      "peer.ipv4": "57.182.231.186",
+      "peer[1].ipv4": "13.114.6.6"
+    }
+  }
+]
+[
+  {
+    "traceId": "10647b6cb4bdca377f5235b703d69390",
+    "spanId": "66038c35149794e2",
+    "name": "tcp.connect",
+    "startTime": [
+      1779098498,
+      20000000
+    ],
+    "endTime": [
+      1779098498,
+      189788000
+    ],
+    "attributes": {
+      "net.transport": "ip_tcp",
+      "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
+      "net.peer.port": 6543,
+      "net.peer.ip": "57.182.231.186",
+      "net.host.ip": "10.142.3.250",
+      "net.host.port": 54040
+    }
+  }
+]
+[
+  {
+    "traceId": "10647b6cb4bdca377f5235b703d69390",
+    "spanId": "193267ecbf67e521",
+    "name": "pg.connect",
+    "startTime": [
+      1779098498,
+      19000000
+    ],
+    "endTime": [
+      1779098498,
+      861894900
+    ],
+    "attributes": {
+      "db.system": "postgresql",
+      "db.name": "postgres",
+      "db.connection_string": "postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres",
+      "db.user": "postgres.iaeuavzngbussduupiot",
+      "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
+      "net.peer.port": 6543
+    }
+  }
+]
+[
+  {
+    "traceId": "ac36e17056b6ef2c8c5752ed0b1a89a3",
+    "spanId": "78a2bb386cbdd830",
+    "name": "pg.query:SELECT postgres",
+    "startTime": [
+      1779098498,
+      878000000
+    ],
+    "endTime": [
+      1779098499,
+      5906700
+    ],
+    "attributes": {
+      "db.system": "postgresql",
+      "db.name": "postgres",
+      "db.connection_string": "postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres",
+      "db.user": "postgres.iaeuavzngbussduupiot",
+      "net.peer.name": "aws-1-ap-northeast-1.pooler.supabase.com",
+      "net.peer.port": 6543,
+      "db.statement": "SELECT NOW()"
+    }
+  }
+]
